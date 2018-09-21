@@ -15,31 +15,32 @@ namespace HairSalon
                 .AddEnvironmentVariables();
             Configuration = builder.Build();
         }
+
         public IConfigurationRoot Configuration { get; }
+
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
         }
+
         public void Configure(IApplicationBuilder app)
         {
             app.UseDeveloperExceptionPage();
+            app.UseStaticFiles();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}"
-                );
+                    template: "{controller=Home}/{action=Index}/{id?}");
             });
-            app.UseStaticFiles();
-            app.Run(async(context) =>
+            app.Run(async (context) =>
             {
                 await context.Response.WriteAsync("Hello World!");
             });
-
         }
-        public static class DBConfiguration
-        {
-            public static string ConnectionString = "server=localhost;user id=root;password=root;port=8889;database=skye_nguyen;";
-        }
+    }
+    public static class DBConfiguration
+    {
+        public static string ConnectionString = "server=localhost;user id=root;password=root;port=8889;database=skye_nguyen;";
     }
 }
