@@ -45,7 +45,8 @@ This is an app for a hair salon. The owner should be able to add a list of the s
     > CREATE DATABASE hair_salon;
     > USE hair_salon;
     > CREATE TABLE stylists (id serial PRIMARY KEY, name VARCHAR(255));
-    > CREATE TABLE clients (id serial PRIMARY KEY, name VARCHAR(255), stylist_id Int32);
+    > CREATE TABLE clients ( `id` INT(32) NOT NULL AUTO_INCREMENT , `name` VARCHAR(255) NOT NULL , `stylist_id` INT(32) NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
+    
 ```
 
 ## Known Bugs
