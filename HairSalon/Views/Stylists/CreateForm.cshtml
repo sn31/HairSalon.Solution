@@ -1,0 +1,20 @@
+ @{
+  Layout = "_Layout";
+}
+<div class="jumbotron">
+    <h1>New Client</h1>
+</div>
+<div class="container">
+ <form class="form-group" action='/stylists/@Model["stylist"].Id/clients/new' method='post'>
+        <label>Client's Name: 
+            <input type="text" name="newClient" class="form-control" required>
+        </label><br>
+        <label>Client's Phone: 
+            <input type="text" name="newPhone" class="form-control" required>
+        </label><br>
+        <label>Notes: 
+            <input type="text" name="newNote" class="form-control" required>
+        </label><br>
+      <button class='btn btn-success'>Add Client</button>
+  </form>
+</div>

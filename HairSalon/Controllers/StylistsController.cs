@@ -44,5 +44,17 @@ namespace HairSalon.Controllers
             model.Add("client", allClients);
             return View(model);
         }
+        
+        [HttpPost("/stylists/{id}/clients/new")]
+        public ActionResult CreateForm(int id)
+        {
+            Dictionary<string, object> model = new Dictionary<string, object> { };
+            Stylist selectedStylist = Stylist.Find(id);
+            List<Client> allClients = Client.Find(id);
+            model.Add("stylist", selectedStylist);
+            model.Add("client", allClients);
+            return View(model);
+        }
+
     }
 }
