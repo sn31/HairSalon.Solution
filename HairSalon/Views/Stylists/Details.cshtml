@@ -1,17 +1,18 @@
 @{
   Layout = "_Layout";
 }
-<div class="jumbotron">
-    <h1>Stylists</h1>
-</div>
 <div class="container">
   <form class="form-group" action='/stylists/@Model["stylist"].Id/clients/new' method='get'>
       <button class='btn btn-success'>Add Client</button>
-  </form><hr>
+  </form>
+  <form class="form-group" action='/stylists' method='get'>
+      <button class='btn btn-success'>Return to Stylists Page</button>
+  </form>
   <table class="table">
   <thead>
     <tr>
-      <th scope="col">Client Name</th>
+      <th scope="col">Client's Name</th>
+       <th scope="col">Client's Phone </th>
     </tr>
   </thead>
   @foreach (var client in @Model["client"])
@@ -19,14 +20,12 @@
   <tbody>
     <tr>
       <td>@client.Name</td>
-      
+       <td>@client.Phone</td>
     </tr>
     
   </tbody>
 
   }
   </table>
-  <form class="form-group" action='/stylists' method='get'>
-      <button class='btn btn-success'>Return to Stylists Page</button>
-  </form><hr>
+  
 </div>

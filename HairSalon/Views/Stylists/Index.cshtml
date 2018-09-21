@@ -1,45 +1,47 @@
-@{
-  Layout = "_Layout";
-}
-<div class="jumbotron">
-    <h1>Stylists</h1>
-</div>
-<div class="container">
-  <form class="form-group" action='/Stylists' method='post'>
-        <label>Add Stylist: 
-            <input type="text" name="newStylist" class="form-control" required>
-        </label><br>
-      <button class='btn btn-success'>Add Stylist</button>
-  </form><hr>
-  <form action='/' method='get'>
-      <button class='btn btn-success'>Back to Home</button>
-  </form><br>
-  
-<table class="table">
-  <thead>
-    <tr>
-      <th scope="col">ID</th>
-      <th scope="col">Stylist</th>
-      <th scope="col">Details</th>
-     
-    </tr>
-  </thead>
-  @foreach (var stylist in @Model)
-  {
-  <tbody>
-    <tr>
-      <th scope="row">@stylist.Id</th>
-      <td>@stylist.Name</td>
-       <td>
-       <form action='/stylists/@stylist.Id' method='get'>
-        <button class='btn btn-success'>View Details</button>
-       </form><br>
-       </td>
-    </tr>
-    
-  </tbody>
+@{ Layout = "_Layout"; }
+<form action='/' method='get'>
+  <button class='btn'>Back to Home</button>
+</form>
+<br>
+<div class="container stylists">
+  <div class="row">
+    <div class="col">
+      <form class="form-group" action='/Stylists' method='post'>
+        <label>Add Stylist:
+          <input type="text" name="newStylist" class="form-control" required>
+        </label>
+        <br>
+        <div>
+          <button class='btn'>Add Stylist</button>
+        </div>
+      </form>
+    </div>
+    <div class="col">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Stylist</th>
+            <th scope="col">Details</th>
+          </tr>
+        </thead>
+        @foreach (var stylist in @Model) {
+        <tbody>
+          <tr>
+            <th scope="row">@stylist.Id</th>
+            <td>@stylist.Name</td>
+            <td>
+              <form action='/stylists/@stylist.Id' method='get'>
+                <button class='btn btn-success'>View Details</button>
+              </form>
+              <br>
+            </td>
+          </tr>
+        </tbody>
+        }
+      </table>
+    </div>
 
-  }
-  </table>
 
-</div>
+
+  </div>

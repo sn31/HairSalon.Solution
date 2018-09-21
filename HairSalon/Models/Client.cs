@@ -34,8 +34,8 @@ namespace HairSalon.Models
             cmd.CommandText = @"INSERT INTO `clients` (`name`,`stylist_id`,`phone`) VALUES (@NewName,@NewStylistId,@NewPhone);";
             
             cmd.Parameters.AddWithValue("@NewName", this.Name);
-            cmd.Parameters.AddWithValue("@NewPhone", this.Phone);
             cmd.Parameters.AddWithValue("@NewStylistId", this.stylist_id);
+            cmd.Parameters.AddWithValue("@NewPhone", this.Phone);
 
             cmd.ExecuteNonQuery();
             Id = (int)cmd.LastInsertedId;
@@ -53,7 +53,7 @@ namespace HairSalon.Models
             conn.Open();
 
             var cmd = conn.CreateCommand()as MySqlCommand;
-            cmd.CommandText = @"SELECT * FROM `Clients`;";
+            cmd.CommandText = @"SELECT * FROM `clients`;";
             MySqlDataReader rdr = cmd.ExecuteReader()as MySqlDataReader;
 
             while (rdr.Read())
@@ -80,7 +80,7 @@ namespace HairSalon.Models
             conn.Open();
 
             var cmd = conn.CreateCommand()as MySqlCommand;
-            cmd.CommandText = @"DELETE FROM `Clients`;";
+            cmd.CommandText = @"DELETE FROM `clients`;";
 
             cmd.ExecuteNonQuery();
 
@@ -136,7 +136,6 @@ namespace HairSalon.Models
                 newName= rdr.GetString(1);
                 newStylist_id= rdr.GetInt32(2);
                 newPhone = rdr.GetString(3);
-
             }
             
             Client selectedClient = new Client(newName,newStylist_id,newPhone,newId);
