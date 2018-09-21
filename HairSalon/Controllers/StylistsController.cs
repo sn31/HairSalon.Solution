@@ -42,6 +42,7 @@ namespace HairSalon.Controllers
             List<Client> allClients = Client.Find(id);
             model.Add("stylist", selectedStylist);
             model.Add("client", allClients);
+            Console.WriteLine(allClients.Count);
             return View(model);
         }
         [HttpGet("/stylists/{id}/clients/new")]

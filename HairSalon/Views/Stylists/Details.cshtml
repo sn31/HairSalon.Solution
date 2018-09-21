@@ -19,6 +19,7 @@
        <th scope="col">Client's Phone </th>
     </tr>
   </thead>
+  
   @foreach (var client in @Model["client"])
   {
   <tbody>
@@ -26,9 +27,7 @@
       <td>@client.Name</td>
        <td>@client.Phone</td>
     </tr>
-    
   </tbody>
-
   }
   </table>
   
