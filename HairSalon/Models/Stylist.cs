@@ -105,22 +105,23 @@ namespace HairSalon.Models
             conn.Open();
 
             var cmd = conn.CreateCommand()as MySqlCommand;
-            cmd.CommandText = @"SELECT name FROM `stylists` WHERE id = @SelectedId;";
+            cmd.CommandText = @"SELECT name FROM `stylists` WHERE id = @NewId;";
 
-            cmd.Parameters.AddWithValue("@SelectedId", id);
+            cmd.Parameters.AddWithValue("@NewId", id);
             MySqlDataReader rdr = cmd.ExecuteReader()as MySqlDataReader;
 
             rdr.Read();
-            string selectedName = rdr.GetString(1);
 
-            Stylist selectedStylist = new Stylist(selectedName);
+            string newName = rdr.GetString(0);
+
+            Stylist foundStylist = new Stylist(newName,id);
 
             conn.Close();
             if (conn != null)
             {
                 conn.Dispose();
             }
-            return selectedStylist;
+            return foundStylist;
         }
         
     }
