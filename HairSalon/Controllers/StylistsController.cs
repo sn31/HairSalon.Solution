@@ -13,26 +13,26 @@ namespace HairSalon.Controllers
             return View(StylistList);
         }
 
-        // [HttpPost("/stylists")]
-        // public ActionResult Create()
-        // {
-        //     List<Stylist> StylistList = Stylist.GetAll();
+        [HttpPost("/stylists")]
+        public ActionResult Create()
+        {
+            List<Stylist> StylistList = Stylist.GetAll();
 
-        //     int flag = 0;
-        //     foreach (Stylist Stylist in StylistList)
-        //     {
-        //         if (Stylist.Name == Request.Form["newStylist"])
-        //         {
-        //             flag++;
-        //         }
-        //     }
-        //     if (flag == 0)
-        //     {
-        //         Stylist newStylist = new Stylist(Request.Form["newStylist"]);
-        //         newStylist.Create();
-        //     }
-        //     return RedirectToAction("Index","Clients");
-        // }
+            int flag = 0;
+            foreach (Stylist Stylist in StylistList)
+            {
+                if (Stylist.Name == Request.Form["newStylist"])
+                {
+                    flag++;
+                }
+            }
+            if (flag == 0)
+            {
+                Stylist newStylist = new Stylist(Request.Form["newStylist"]);
+                newStylist.Create();
+            }
+            return RedirectToAction("Index");
+        }
 
     }
 }

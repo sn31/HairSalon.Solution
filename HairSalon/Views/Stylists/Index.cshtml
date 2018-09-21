@@ -20,16 +20,23 @@
     <tr>
       <th scope="col">ID</th>
       <th scope="col">Stylist</th>
+      <th scope="col">Details</th>
      
     </tr>
   </thead>
-  @foreach (var Stylist in @Model)
+  @foreach (var stylist in @Model)
   {
   <tbody>
     <tr>
-      <th scope="row">@Stylist.Id</th>
-      <td>@Stylist.Name</td>
+      <th scope="row">@stylist.Id</th>
+      <td>@stylist.Name</td>
+       <td>
+       <form action='/stylists/@stylist.Id' method='get'>
+        <button class='btn btn-success'>View Details</button>
+       </form><br>
+       </td>
     </tr>
+    
   </tbody>
 
   }
