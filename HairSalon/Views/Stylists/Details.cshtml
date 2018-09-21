@@ -5,7 +5,7 @@
     <h1>Stylists</h1>
 </div>
 <div class="container">
-  <form class="form-group" action='/stylists/@Model["stylist"].Id/clients/new' method='post'>
+  <form class="form-group" action='/stylists/@Model["stylist"].Id/clients/new' method='get'>
       <button class='btn btn-success'>Add Client</button>
   </form><hr>
   <table class="table">
@@ -26,5 +26,7 @@
 
   }
   </table>
-
+  <form class="form-group" action='/stylists' method='get'>
+      <button class='btn btn-success'>Return to Stylists Page</button>
+  </form><hr>
 </div>

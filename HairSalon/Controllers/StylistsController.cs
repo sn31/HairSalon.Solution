@@ -44,16 +44,19 @@ namespace HairSalon.Controllers
             model.Add("client", allClients);
             return View(model);
         }
-        
+        [HttpGet("/stylists/{id}/clients/new")]
         [HttpPost("/stylists/{id}/clients/new")]
         public ActionResult CreateForm(int id)
         {
-            Dictionary<string, object> model = new Dictionary<string, object> { };
-            Stylist selectedStylist = Stylist.Find(id);
-            List<Client> allClients = Client.Find(id);
-            model.Add("stylist", selectedStylist);
-            model.Add("client", allClients);
-            return View(model);
+            if (Request.Method == "POST")
+            {
+                Client newClient = new Client(Request.Form["newClient"],id, Request.Form["newPhone"]);
+                newClient.Create();
+                return RedirectToAction("Details");
+            }
+            else{
+                return View(id);
+            }
         }
 
     }
