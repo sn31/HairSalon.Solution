@@ -2,14 +2,23 @@
   Layout = "_Layout";
 }
 
-<div class="container">
+<div class="container stylists">
  <form class="form-group" action='/stylists/@Model/clients/new' method='post'>
         <label>Client's Name: 
             <input type="text" name="newClient" class="form-control" required>
         </label><br>
         <label>Client's Phone: 
-            <input type="text" name="newPhone" class="form-control" required>
+            <input type="number" name="newPhone" class="form-control" required>
         </label><br>
-      <button class='btn btn-success'>Add Client</button>
+      <button class='btn'>Add Client</button>
   </form>
+</div>
+<div>
+    <form class="form-group" action='/stylists' method='get'>
+    <button class='btn btn-success'>Previous Page</button>
+</form>
+<div>
+    <form class="form-group" action='/stylists' method='get'>
+    <button class='btn btn-success'>All Stylists</button>
+</form>
 </div>
