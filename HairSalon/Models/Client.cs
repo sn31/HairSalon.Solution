@@ -15,14 +15,34 @@ namespace HairSalon.Models
         {
             Name = newName;
             Phone = newPhone;
-
             Id = newId;
         }
         public Client(string newName,int newId = 0)
         {
             Name = newName;
-          
             Id = newId;
+        }
+        public override bool Equals(System.Object otherClient)
+        {
+            if (!(otherClient is Client))
+            {
+                return false;
+            }
+            else
+            {
+                Client newClient = (Client) otherClient;
+                bool idEquality = this.Id == newClient.Id;
+                bool nameEquality = this.Name == newClient.Name;
+                return (idEquality && nameEquality);
+            }
+        }
+        public override int GetHashCode()
+        {
+            return this.Name.GetHashCode();
+        }
+        public override string ToString()
+        {
+            return String.Format("{{ id={0}, name={1}, phone={2}}}", Id, Name, Phone);
         }
         public void Create()
         {
@@ -30,7 +50,7 @@ namespace HairSalon.Models
             conn.Open();
 
             MySqlCommand cmd = conn.CreateCommand();
-            cmd.CommandText = @"INSERT INTO `clients` (`name`,`phone`) VALUES (@NewName,@NewPhone);";
+            cmd.CommandText = @"INSERT INTO clients (name,phone) VALUES (@NewName,@NewPhone);";
             
             cmd.Parameters.AddWithValue("@NewName", this.Name);
            
@@ -142,7 +162,7 @@ namespace HairSalon.Models
             MySqlCommand cmd = conn.CreateCommand();
             cmd.CommandText = @"INSERT INTO stylists_clients (`stylist_id`, `client_id`) VALUES (@StylistId, @ClientId);";
             cmd.Parameters.AddWithValue("@StylistId", newStylist.Id);
-            cmd.Parameters.AddWithValue("@RecipeId", this.Id);
+            cmd.Parameters.AddWithValue("@ClientId", this.Id);
             cmd.ExecuteNonQuery();
             conn.Close();
             if (conn != null)

@@ -39,7 +39,7 @@ namespace HairSalon.Controllers
         {
             Dictionary<string, object> model = new Dictionary<string, object> { };
             Stylist selectedStylist = Stylist.Find(id);
-            List<Client> allClients = Client.GetClients(id);
+            List<Client> allClients = selectedStylist.GetClients();
             model.Add("stylist", selectedStylist);
             model.Add("client", allClients);
             Console.WriteLine(allClients.Count);
@@ -51,7 +51,7 @@ namespace HairSalon.Controllers
         {
             if (Request.Method == "POST")
             {
-                Client newClient = new Client(Request.Form["newClient"],id, Request.Form["newPhone"]);
+                Client newClient = new Client(Request.Form["newClient"], Request.Form["newPhone"]);
                 newClient.Create();
                 return RedirectToAction("Details");
             }
