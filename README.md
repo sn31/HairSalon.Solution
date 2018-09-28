@@ -1,6 +1,6 @@
 # Hair Salon - Skye Nguyen
 
-##### Epicodus Independent Project C# Week 3 - 09/21/2018.
+##### Epicodus Independent Project C# Week 3 & 4 - 09/21/2018.
 
 ## Description
 
@@ -12,7 +12,16 @@ This is an app for a hair salon. The owner should be able to add a list of the s
 * A salon employee needs to be able to select a stylist, see their details, and see a list of all clients that belong to that stylist.
 * A salon employee needs to add new stylists to our system when they are hired.
 * A salon employee needs to be able to add new clients to a specific stylist. I should not be able to add a client if no stylists have been added.
-
+* A salon employee needs to be able to delete stylists (all and single).
+* A salon employee needs to be able to delete clients (all and single).
+* A salon employee needs to be able to view clients (all and single).
+* A salon employee needs to be able to edit JUST the name of a stylist. (You can choose to allow employees to edit additional properties but it is not required.)
+* A salon employee needs to be able to edit ALL of the information for a client.
+* A salon employee needs to be able to add a specialty and view all specialties that have been added.
+* A salon employee needs to be able to add a specialty to a stylist.
+* A salon employee needs to be able to click on a specialty and see all of the stylists that have that specialty.
+* A salon employee needs to see the stylist's specialties on the stylist's details page.
+* A salon employee needs to be able to add a stylist to a specialty.
 
 ## Setup/Installation Requirements
 
@@ -48,6 +57,7 @@ This is an app for a hair salon. The owner should be able to add a list of the s
     > CREATE TABLE clients ( `id` INT(32) NOT NULL AUTO_INCREMENT , `name` VARCHAR(255) NOT NULL , `stylist_id` INT(32) NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
     
 ```
+4. Repeat step 3 to make a hair_salon_test table.
 
 ## Known Bugs
 
