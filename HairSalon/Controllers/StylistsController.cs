@@ -42,7 +42,7 @@ namespace HairSalon.Controllers
             List<Client> allClients = selectedStylist.GetClients();
             model.Add("stylist", selectedStylist);
             model.Add("client", allClients);
-            Console.WriteLine(allClients.Count);
+            
             return View(model);
         }
         [HttpGet("/stylists/{id}/clients/new")]
@@ -58,6 +58,13 @@ namespace HairSalon.Controllers
             else{
                 return View(id);
             }
+        }
+    
+        [HttpPost("/stylists/delete/{stylistId}")]
+        public ActionResult Delete(int stylistId)
+        {
+            Stylist.Delete(stylistId);
+            return RedirectToAction("Index");
         }
 
     }
