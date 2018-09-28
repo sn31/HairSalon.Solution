@@ -22,6 +22,7 @@
             <th scope="col">Name</th>
             <th scope="col">Stylists</th>
              <th scope="col">Remove Specialties</th>
+             <th scope="col">Add Stylist</th>
           </tr>
         </thead>
         @foreach (var specialty in @Model) {
@@ -36,6 +37,12 @@
             <td>
               <form action='/specialties/delete/@specialty.Id' method='post'>
                 <button class='btn btn-success' type="submit">Remove Specialty</button>
+              </form>
+              <br>
+            </td>
+            <td>
+              <form action='/specialties/@specialty.Id/stylists/new' method='get'>
+                <button class='btn btn-success' type="submit">Add Stylist</button>
               </form>
               <br>
             </td>

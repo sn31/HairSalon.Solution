@@ -183,7 +183,7 @@ namespace HairSalon.Models
             MySqlConnection conn = DB.Connection();
             conn.Open();
             MySqlCommand cmd = conn.CreateCommand();
-            cmd.CommandText = @"SELECT stylists.* FROM specialties
+            cmd.CommandText = @"SELECT stylists.Id, stylists.Name FROM specialties
             JOIN stylists_specialties ON (specialties.id = stylists_specialties.specialty_id)
             JOIN stylists ON (stylists_specialties.stylist_id = stylists.id)
             WHERE specialties.id = @thisId;";
