@@ -20,6 +20,7 @@ namespace HairSalon.Tests
         {
             Stylist.ClearAll();
             Client.ClearAll();
+            Specialty.ClearAll();
 
             MySqlConnection conn = DB.Connection();
             conn.Open();

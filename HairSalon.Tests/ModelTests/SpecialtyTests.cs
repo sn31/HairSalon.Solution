@@ -55,8 +55,9 @@ namespace StylistBox.Tests
         [TestMethod]
         public void Create_AddNewSpecialty()
         {
+            
             //Arrange
-            Specialty newSpecialty = new Specialty("Color");
+            Specialty newSpecialty = new Specialty("Color2");
             newSpecialty.Create();
             List <Specialty> expectedSpecialties = new List <Specialty> {newSpecialty};
 
@@ -88,7 +89,7 @@ namespace StylistBox.Tests
             //Arrange
             Specialty newSpecialty1 = new Specialty("Cut");
             newSpecialty1.Create();
-            Specialty newSpecialty2 = new Specialty("Color");
+            Specialty newSpecialty2 = new Specialty("Color2");
             newSpecialty2.Create();
 
             //Act
@@ -103,7 +104,7 @@ namespace StylistBox.Tests
             //Arrange
             Specialty newSpecialty = new Specialty("Trim");
             newSpecialty.Create();
-            string newName = "Color";
+            string newName = "Color2";
 
             //Act
             newSpecialty.Update(newName);
@@ -115,7 +116,7 @@ namespace StylistBox.Tests
         public void Delete_DeleteSpecialtyProperly()
         {
             //Arrange
-            Specialty newSpecialty1 = new Specialty("Color");
+            Specialty newSpecialty1 = new Specialty("NotColor");
             newSpecialty1.Create();
             Specialty newSpecialty2 = new Specialty("Cut");
             newSpecialty2.Create();
@@ -132,7 +133,7 @@ namespace StylistBox.Tests
         public void DeleteAll_DeleteAllSpecialties()
         {
             //Arrange
-            Specialty newSpecialty1 = new Specialty("Color");
+            Specialty newSpecialty1 = new Specialty("Perm");
             newSpecialty1.Create();
             Specialty newSpecialty2 = new Specialty("Cut");
             newSpecialty2.Create();
@@ -149,7 +150,7 @@ namespace StylistBox.Tests
         public void AddStylist_AddStylistExactly()
         {   
             //Arrange
-            Specialty newSpecialty = new Specialty("Color");
+            Specialty newSpecialty = new Specialty("Cut");
             newSpecialty.Create();
             Stylist newStylist = new Stylist("Jane");
             newStylist.Create();
