@@ -48,6 +48,22 @@ namespace HairSalon.Controllers
             Client.ClearAll();
             return RedirectToAction("Index");
         }
+
+        [HttpPost("/clients/update/{clientId}")]
+        [HttpGet("/clients/update/{clientId}")]
+        public ActionResult Update(int clientId, string clientNewName, string clientNewNumber)
+        {
+            if (Request.Method == "POST")
+            {
+                Client selectedClient = Client.Find(clientId);
+                selectedClient.Update(clientNewName, clientNewNumber);
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return View(clientId);
+            }
+        }
     }
 
 }

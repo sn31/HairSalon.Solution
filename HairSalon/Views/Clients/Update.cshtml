@@ -1,0 +1,24 @@
+ @{
+  Layout = "_Layout";
+}
+
+<div class="container stylists">
+ <form class="form-group" action='/clients/update/@Model' method='post'>
+        <label>Client's Name: 
+            <input type="text" name="clientNewName" class="form-control" required>
+        </label><br>
+        <label>Client's Phone: 
+            <input type="number" name="clientNewNumber" class="form-control" required>
+        </label><br>
+      <button class='btn' type ="submit">Update Client's Info</button>
+  </form>
+</div>
+<div>
+    <form class="form-group" action='/clients/@Model' method='get'>
+    <button class='btn btn-success'>Previous Page</button>
+</form> &nbsp;&nbsp;
+<div>
+    <form class="form-group" action='/clients' method='get'>
+    <button class='btn btn-success'>All Clients</button>
+</form>
+</div>
