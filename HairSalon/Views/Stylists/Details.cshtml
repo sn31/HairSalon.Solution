@@ -12,11 +12,19 @@
     <button class='btn btn-success mx-3'>Add Specialty</button>
   </form>
 </div>
+<div>
+
+  @foreach(var specialty in @Model["stylist"].GetSpecialties())
+    {
+      <p><strong>@specialty.Name</strong> &nbsp;&nbsp;</p>
+    }
+    
+</div>
 <div class="container stylists">
   <table class="table">
   <thead>
     <tr>
-      <th>Specialties</th>
+      
       <th scope="col">Client's Name</th>
        <th scope="col">Client's Phone </th>
        <th scope="col">Remove Client </th>
@@ -28,17 +36,12 @@
   {
   <tbody>
     <tr>
-    <td>@foreach(var specialty in @Model["stylist"].GetSpecialties())
-    {
-        <p>@specialty.Name</p>
-    }
-    </td>
       <td>@client.Name</td>
        <td>@client.Phone</td>
         <td>
               <form action='/stylists/@Model["stylist"].Id/clients/remove/@client.Id' method='post'>
               
-                <button class='btn btn-success' type="submit">Remove Stylist</button>
+                <button class='btn btn-success' type="submit">Remove Client</button>
               </form>
               <br>
             </td>

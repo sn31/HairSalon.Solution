@@ -155,6 +155,7 @@ namespace HairSalon.Models
 
             var cmd = conn.CreateCommand() as MySqlCommand;
             cmd.CommandText = @"DELETE FROM stylists_clients WHERE stylist_id = @thisId;
+            DELETE FROM stylists_specialties WHERE stylist_id = @thisId;
             DELETE FROM stylists WHERE id = @thisId;";
             cmd.Parameters.AddWithValue("@thisId", stylistId);
             cmd.ExecuteNonQuery();
