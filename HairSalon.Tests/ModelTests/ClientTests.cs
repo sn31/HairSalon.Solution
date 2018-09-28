@@ -169,7 +169,7 @@ namespace HairSalon.Tests
             Stylist newStylist = new Stylist("Bazzzzy");
             newStylist.Create();
             List <Stylist> expectedStylists = new List <Stylist> {newStylist};
-
+            
             //Act
             testClient.AddStylist(newStylist);
             List <Stylist> Stylists = testClient.GetStylists();

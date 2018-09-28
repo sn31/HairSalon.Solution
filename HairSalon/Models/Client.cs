@@ -163,7 +163,7 @@ namespace HairSalon.Models
             conn.Open();
 
             MySqlCommand cmd = conn.CreateCommand();
-            cmd.CommandText = @"INSERT INTO stylists_clients (`stylist_id`, `client_id`) VALUES (@StylistId, @ClientId);";
+            cmd.CommandText = @"INSERT INTO stylists_clients (stylist_id, client_id) VALUES (@StylistId, @ClientId);";
             cmd.Parameters.AddWithValue("@StylistId", newStylist.Id);
             cmd.Parameters.AddWithValue("@ClientId", this.Id);
             cmd.ExecuteNonQuery();

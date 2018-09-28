@@ -43,8 +43,7 @@ namespace HairSalon.Models
             conn.Open();
 
             var cmd = conn.CreateCommand() as MySqlCommand;
-            cmd.CommandText = @"INSERT INTO `stylists` (`name`) VALUES (@NewName);";
-            MySqlParameter food = new MySqlParameter();
+            cmd.CommandText = @"INSERT INTO stylists (`name`) VALUES (@NewName);";
             cmd.Parameters.AddWithValue("@NewName", this.Name);
 
             cmd.ExecuteNonQuery();
@@ -63,7 +62,7 @@ namespace HairSalon.Models
             conn.Open();
 
             var cmd = conn.CreateCommand() as MySqlCommand;
-            cmd.CommandText = @"SELECT * FROM `stylists`;";
+            cmd.CommandText = @"SELECT * FROM stylists;";
             MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
 
             while (rdr.Read())
@@ -163,13 +162,13 @@ namespace HairSalon.Models
                 conn.Dispose();
             }
         }
-        public void AddClient(Stylist newClient)
+        public void AddClient(Client newClient)
         {
             MySqlConnection conn = DB.Connection();
             conn.Open();
 
             MySqlCommand cmd = conn.CreateCommand();
-            cmd.CommandText = @"INSERT INTO stylists_clients (`stylist_id`, `client_id`) VALUES (@StylistId, @ClientId);";
+            cmd.CommandText = @"INSERT INTO stylists_clients (stylist_id, client_id) VALUES (@StylistId, @ClientId);";
             cmd.Parameters.AddWithValue("@ClientId", newClient.Id);
             cmd.Parameters.AddWithValue("@StylistId", this.Id);
             cmd.ExecuteNonQuery();
@@ -179,6 +178,7 @@ namespace HairSalon.Models
                 conn.Dispose();
             }
         }
+        
         public List<Client> GetClients()
         {
             List<Client> allClients = new List<Client> { };
