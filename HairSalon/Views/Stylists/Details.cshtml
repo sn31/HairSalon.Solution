@@ -15,6 +15,8 @@
     <tr>
       <th scope="col">Client's Name</th>
        <th scope="col">Client's Phone </th>
+       <th scope="col">Remove Client </th>
+
     </tr>
   </thead>
   
@@ -24,6 +26,12 @@
     <tr>
       <td>@client.Name</td>
        <td>@client.Phone</td>
+        <td>
+              <form action='/stylists/@stylist.Id/remove/clients/@client.Id' method='post'>
+                <button class='btn btn-success'>Remove Stylist</button>
+              </form>
+              <br>
+            </td>
     </tr>
   </tbody>
   }
