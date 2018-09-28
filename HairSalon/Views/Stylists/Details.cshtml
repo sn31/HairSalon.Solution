@@ -16,7 +16,7 @@
 
   @foreach(var specialty in @Model["stylist"].GetSpecialties())
     {
-      <p><strong>@specialty.Name</strong> &nbsp;&nbsp;</p>
+      <p><strong><a class="btn" href="/specialties/@specialty.Id/"></a>@specialty.Name</strong> &nbsp;&nbsp;</p>
     }
     
 </div>

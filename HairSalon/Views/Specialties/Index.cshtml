@@ -1,0 +1,44 @@
+@{ Layout = "_Layout"; }
+<div class="nav">
+  <form action='/' method='get'>
+    <button class='btn mx-2'>Back to Home</button>
+  </form>
+  <form action='/specialties/deleteall' method='post'>
+    <button class='btn mx-2'>Delete All Specialties</button>
+  </form>
+</div>
+
+<div class="container stylists">
+  <div class="row">
+
+
+    <div class="col">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Stylists</th>
+             <th scope="col">Remove Specialties</th>
+          </tr>
+        </thead>
+        @foreach (var specialty in @Model) {
+        <tbody>
+          <tr>
+            <td>@specialty.Name</td>
+            <td>@foreach(var stylist in @specialty.GetStylists())
+            {
+                @stylist.Name
+            }
+            </td>
+            <td>
+              <form action='/specialties/delete/@specialty.Id' method='post'>
+                <button class='btn btn-success' type="submit">Remove Specialty</button>
+              </form>
+              <br>
+            </td>
+          </tr>
+        </tbody>
+        }
+      </table>
+    </div>
+  </div>
