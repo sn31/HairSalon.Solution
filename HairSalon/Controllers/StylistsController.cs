@@ -34,29 +34,34 @@ namespace HairSalon.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpGet("/stylists/{id}")]
-        public ActionResult Details(int id)
+        [HttpGet("/stylists/{stylistId}")]
+        public ActionResult Details(int stylistId)
         {
             Dictionary<string, object> model = new Dictionary<string, object> { };
-            Stylist selectedStylist = Stylist.Find(id);
+            Stylist selectedStylist = Stylist.Find(stylistId);
+
             List<Client> allClients = selectedStylist.GetClients();
+            Console.WriteLine(stylistId);
+            Console.WriteLine(allClients.Count);
             model.Add("stylist", selectedStylist);
             model.Add("client", allClients);
             
             return View(model);
         }
-        [HttpGet("/stylists/{id}/clients/new")]
-        [HttpPost("/stylists/{id}/clients/new")]
-        public ActionResult CreateForm(int id)
+        [HttpGet("/stylists/{stylistId}/clients/new")]
+        [HttpPost("/stylists/{stylistIdd}/clients/new")]
+        public ActionResult CreateForm(int stylistId)
         {
             if (Request.Method == "POST")
             {
                 Client newClient = new Client(Request.Form["newClient"], Request.Form["newPhone"]);
                 newClient.Create();
+                Stylist selectedStylist = Stylist.Find(stylistId);
+                selectedStylist.AddClient(newClient);
                 return RedirectToAction("Details");
             }
             else{
-                return View(id);
+                return View(stylistId);
             }
         }
     
@@ -72,12 +77,12 @@ namespace HairSalon.Controllers
             Stylist.ClearAll();
             return RedirectToAction("Index");
         }
-        [HttpDelete("/stylists/@stylist.Id/remove/clients/@client.Id")]
+        [HttpPost("/stylists/{stylistId}/clients/remove/{clientId}")]
         public ActionResult RemoveClient(int stylistId, int clientId)
         {
             Stylist selectedStylist = Stylist.Find(stylistId);
             selectedStylist.RemoveClient(clientId);
-            return RedirectToAction("Details");
+            return RedirectToAction("Details",selectedStylist);
         }
     }
 }

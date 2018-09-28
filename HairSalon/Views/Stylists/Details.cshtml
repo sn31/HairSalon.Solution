@@ -27,8 +27,9 @@
       <td>@client.Name</td>
        <td>@client.Phone</td>
         <td>
-              <form action='/stylists/@stylist.Id/remove/clients/@client.Id' method='post'>
-                <button class='btn btn-success'>Remove Stylist</button>
+              <form action='/stylists/@Model["stylist"].Id/clients/remove/@client.Id' method='post'>
+              
+                <button class='btn btn-success' type="submit">Remove Stylist</button>
               </form>
               <br>
             </td>

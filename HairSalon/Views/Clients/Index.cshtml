@@ -1,0 +1,43 @@
+@{ Layout = "_Layout"; }
+<div class="nav">
+  <form action='/' method='get'>
+    <button class='btn mx-2'>Back to Home</button>
+  </form>
+  <form action='/clients/deleteall' method='post'>
+    <button class='btn mx-2'>Delete All Clients</button>
+  </form>
+</div>
+
+<div class="container stylists">
+  <div class="row">
+
+
+    <div class="col">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Phone</th>
+             <th scope="col">Remove Customer</th>
+          </tr>
+        </thead>
+        @foreach (var client in @Model) {
+        <tbody>
+          <tr>
+            <td>@client.Name</td>
+            <td>@client.Phone</td>
+            <td>
+              <form action='/clients/delete/@client.Id' method='post'>
+                <button class='btn btn-success' type="submit">Remove Client</button>
+              </form>
+              <br>
+            </td>
+          </tr>
+        </tbody>
+        }
+      </table>
+    </div>
+
+
+
+  </div>

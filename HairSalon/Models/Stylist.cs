@@ -134,10 +134,11 @@ namespace HairSalon.Models
             cmd.Parameters.AddWithValue("@NewId", id);
             MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
 
-            rdr.Read();
-
-            string newName = rdr.GetString(0);
-
+            string newName = "";
+            while(rdr.Read())
+            {
+                newName = rdr.GetString(0);
+            }
             Stylist foundStylist = new Stylist(newName, id);
 
             conn.Close();
