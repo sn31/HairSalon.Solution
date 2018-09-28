@@ -15,6 +15,28 @@ namespace HairSalon.Models
             Name = newName;
             Id = newId;
         }
+        public override bool Equals(System.Object otherSpecialty)
+        {
+            if (!(otherSpecialty is Specialty))
+            {
+                return false;
+            }
+            else
+            {
+                Specialty newSpecialty = (Specialty) otherSpecialty;
+                bool idEquality = this.Id == newSpecialty.Id;
+                bool nameEquality = this.Name == newSpecialty.Name;
+                return (idEquality && nameEquality);
+            }
+        }
+        public override int GetHashCode()
+        {
+            return this.Name.GetHashCode();
+        }
+        public override string ToString()
+        {
+            return String.Format("{{ id={0}, name={1}}}", Id, Name);
+        }
         public void Create()
         {
             MySqlConnection conn = DB.Connection();
@@ -22,7 +44,6 @@ namespace HairSalon.Models
 
             var cmd = conn.CreateCommand() as MySqlCommand;
             cmd.CommandText = @"INSERT INTO `specialties` (`name`) VALUES (@NewName);";
-            MySqlParameter food = new MySqlParameter();
             cmd.Parameters.AddWithValue("@NewName", this.Name);
 
             cmd.ExecuteNonQuery();
@@ -49,7 +70,7 @@ namespace HairSalon.Models
                 int Id = rdr.GetInt32(0);
                 string Name = rdr.GetString(1);
 
-                Specialty newSpecialty= new Specialty(Name, Id);
+                Specialty newSpecialty = new Specialty(Name, Id);
                 allSpecialties.Add(newSpecialty);
             }
             conn.Close();
@@ -66,8 +87,9 @@ namespace HairSalon.Models
             conn.Open();
 
             var cmd = conn.CreateCommand() as MySqlCommand;
+            cmd.CommandText = @"DELETE FROM `stylists_specialties`;";
+            cmd.ExecuteNonQuery();
             cmd.CommandText = @"DELETE FROM `specialties`;";
-
             cmd.ExecuteNonQuery();
 
             conn.Close();
@@ -157,15 +179,15 @@ namespace HairSalon.Models
         }
         public List<Stylist> GetStylists()
         {
-            List<Stylist> allStylists = new List<Stylist>{};
+            List<Stylist> allStylists = new List<Stylist> { };
             MySqlConnection conn = DB.Connection();
             conn.Open();
             MySqlCommand cmd = conn.CreateCommand();
             cmd.CommandText = @"SELECT stylists.* FROM specialties
-            JOIN stylists_specialties ON (specialties.id = stylists_clients.specialty_id)
+            JOIN stylists_specialties ON (specialties.id = stylists_specialties.specialty_id)
             JOIN stylists ON (stylists_specialties.stylist_id = stylists.id)
             WHERE specialties.id = @thisId;";
-            cmd.Parameters.AddWithValue("@thisId",this.Id);
+            cmd.Parameters.AddWithValue("@thisId", this.Id);
             MySqlDataReader rdr = cmd.ExecuteReader();
 
             while (rdr.Read())
@@ -176,11 +198,11 @@ namespace HairSalon.Models
                 allStylists.Add(newStylist);
             }
             conn.Close();
-            if (conn!=null)
+            if (conn != null)
             {
                 conn.Dispose();
             }
-        return allStylists;
+            return allStylists;
         }
     }
 }
