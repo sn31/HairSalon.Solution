@@ -14,7 +14,12 @@ namespace HairSalon.Controllers
             return View(SpecialtyList);
         }
 
-        [HttpPost("/specialties")]
+        [HttpGet("/specialties/new")]
+        public ActionResult CreateForm()
+        {
+            return View();
+        }
+        [HttpPost("/specialties/new")]
         public ActionResult Create()
         {
             List<Specialty> SpecialtyList = Specialty.GetAll();
@@ -34,7 +39,7 @@ namespace HairSalon.Controllers
             }
             return RedirectToAction("Index");
         }
-
+        
         [HttpPost("/specialties/delete/{SpecialtyId}")]
         public ActionResult Delete(int SpecialtyId)
         {
