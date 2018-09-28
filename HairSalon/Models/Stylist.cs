@@ -188,18 +188,19 @@ namespace HairSalon.Models
             MySqlConnection conn = DB.Connection();
             conn.Open();
             MySqlCommand cmd = conn.CreateCommand();
-            cmd.CommandText = @"SELECT clients.* FROM stylists
-            JOIN stylists_clients ON (stylists.id = stylists_clients.stylist_id)
-            JOIN clients ON (stylists_clients.client_id = clients.id)
-            WHERE stylists.id = @thisId;";
-            cmd.Parameters.AddWithValue("@thisId", this.Id);
+            cmd.CommandText = @"SELECT stylists_clients.id, stylists_clients.stylist_id, stylists.name, stylists_clients.client_id, clients.name,clients.phone FROM clients 
+            JOIN stylists_clients ON clients.id = stylists_clients.client_id 
+            JOIN stylists ON stylists_clients.stylist_id = stylists.id 
+            WHERE stylist_id = @stylistId;";
+
+            cmd.Parameters.AddWithValue("@stylistId", this.Id);
             MySqlDataReader rdr = cmd.ExecuteReader();
 
             while (rdr.Read())
             {
-                int Id = rdr.GetInt32(0);
-                string Name = rdr.GetString(1);
-                string Phone = rdr.GetString(2);
+                int Id = rdr.GetInt32(3);
+                string Name = rdr.GetString(4);
+                string Phone = rdr.GetString(5);
                 Client newClient = new Client(Name, Id);
                 allClients.Add(newClient);
             }

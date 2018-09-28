@@ -1,0 +1,21 @@
+ @{
+  Layout = "_Layout";
+}
+
+<div class="container stylists">
+ <form class="form-group" action='/stylists/@Model/specialties/new' method='post'>
+        <label>Specialty: 
+            <input type="text" name="newSpecialty" class="form-control" required>
+        </label><br>
+      <button class='btn' type ="submit">Add Specialty</button>
+  </form>
+</div>
+<div>
+    <form class="form-group" action='/stylists/@Model' method='get'>
+    <button class='btn btn-success'>Previous Page</button>
+</form> &nbsp;&nbsp;
+<div>
+    <form class="form-group" action='/stylists' method='get'>
+    <button class='btn btn-success'>All Stylists</button>
+</form>
+</div>

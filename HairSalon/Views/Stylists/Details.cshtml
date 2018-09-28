@@ -3,16 +3,20 @@
 }
 <div class="nav">
   <form class="form-group" action='/stylists' method='get'>
-    <button class='btn btn-success'>All Stylists</button>
-  </form>&nbsp;&nbsp;&nbsp;
+    <button class='btn btn-success mx-3'>All Stylists</button>
+  </form>
   <form class="form-group" action='/stylists/@Model["stylist"].Id/clients/new' method='get'>
-    <button class='btn btn-success'>Add Client</button>
+    <button class='btn btn-success mx-3'>Add Client</button>
+  </form>
+  <form class="form-group" action='/stylists/@Model["stylist"].Id/specialty/new' method='get'>
+    <button class='btn btn-success mx-3'>Add Specialty</button>
   </form>
 </div>
 <div class="container stylists">
   <table class="table">
   <thead>
     <tr>
+      <th>Specialties</th>
       <th scope="col">Client's Name</th>
        <th scope="col">Client's Phone </th>
        <th scope="col">Remove Client </th>
@@ -24,6 +28,11 @@
   {
   <tbody>
     <tr>
+    <td>@foreach(var specialty in @Model["stylist"].GetSpecialties())
+    {
+        <p>@specialty.Name</p>
+    }
+    </td>
       <td>@client.Name</td>
        <td>@client.Phone</td>
         <td>

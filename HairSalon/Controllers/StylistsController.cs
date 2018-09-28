@@ -49,7 +49,7 @@ namespace HairSalon.Controllers
             return View(model);
         }
         [HttpGet("/stylists/{stylistId}/clients/new")]
-        [HttpPost("/stylists/{stylistIdd}/clients/new")]
+        [HttpPost("/stylists/{stylistId}/clients/new")]
         public ActionResult CreateForm(int stylistId)
         {
             if (Request.Method == "POST")
@@ -57,7 +57,25 @@ namespace HairSalon.Controllers
                 Client newClient = new Client(Request.Form["newClient"], Request.Form["newPhone"]);
                 newClient.Create();
                 Stylist selectedStylist = Stylist.Find(stylistId);
+                
                 selectedStylist.AddClient(newClient);
+                return RedirectToAction("Details");
+            }
+            else{
+                return View(stylistId);
+            }
+        }
+        [HttpGet("/stylists/{stylistId}/specialties/new")]
+        [HttpPost("/stylists/{stylistId}/specialties/new")]
+        public ActionResult CreateSpecialty(int stylistId)
+        {
+            if (Request.Method == "POST")
+            {
+                Specialty newSpecialty= new Specialty(Request.Form["newSpecialty"]);
+                newSpecialty.Create();
+                Stylist selectedStylist = Stylist.Find(stylistId);
+                newSpecialty.AddStylist(selectedStylist);
+                selectedStylist.AddSpecialty(newSpecialty);
                 return RedirectToAction("Details");
             }
             else{
