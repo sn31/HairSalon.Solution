@@ -209,7 +209,7 @@ namespace HairSalon.Models
             }
             return allClients;
         }
-        public void AddSpecialty(Stylist newSpecialty)
+        public void AddSpecialty(Specialty newSpecialty)
         {
             MySqlConnection conn = DB.Connection();
             conn.Open();

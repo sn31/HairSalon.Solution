@@ -76,7 +76,7 @@ namespace HairSalon.Controllers
         public ActionResult RemoveClient(int stylistId, int clientId)
         {
             Stylist selectedStylist = Stylist.Find(stylistId);
-            selectedStylist.Remove(int clientId);
+            selectedStylist.RemoveClient(clientId);
             return RedirectToAction("Details");
         }
     }
