@@ -15,6 +15,28 @@ namespace HairSalon.Models
             Name = newName;
             Id = newId;
         }
+         public override bool Equals(System.Object otherStylist)
+        {
+            if (!(otherStylist is Stylist))
+            {
+                return false;
+            }
+            else
+            {
+                Stylist newStylist = (Stylist) otherStylist;
+                bool idEquality = this.Id == newStylist.Id;
+                bool nameEquality = this.Name == newStylist.Name;
+                return (idEquality && nameEquality);
+            }
+        }
+        public override int GetHashCode()
+        {
+            return this.Name.GetHashCode();
+        }
+        public override string ToString()
+        {
+            return String.Format("{{ id={0}, name={1}}}", Id, Name);
+        }
         public void Create()
         {
             MySqlConnection conn = DB.Connection();
