@@ -5,23 +5,14 @@ using MySql.Data.MySqlClient;
 
 namespace HairSalon.Models
 {
-    public class Client
+    public class Specialty
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Phone {get;set;}
 
-        public Client(string newName, string newPhone,int newId = 0)
+        public Specialty(string newName, int newId = 0)
         {
             Name = newName;
-            Phone = newPhone;
-
-            Id = newId;
-        }
-        public Client(string newName,int newId = 0)
-        {
-            Name = newName;
-          
             Id = newId;
         }
         public void Create()
@@ -29,15 +20,13 @@ namespace HairSalon.Models
             MySqlConnection conn = DB.Connection();
             conn.Open();
 
-            MySqlCommand cmd = conn.CreateCommand();
-            cmd.CommandText = @"INSERT INTO `clients` (`name`,`phone`) VALUES (@NewName,@NewPhone);";
-            
+            var cmd = conn.CreateCommand() as MySqlCommand;
+            cmd.CommandText = @"INSERT INTO `specialties` (`name`) VALUES (@NewName);";
+            MySqlParameter food = new MySqlParameter();
             cmd.Parameters.AddWithValue("@NewName", this.Name);
-           
-            cmd.Parameters.AddWithValue("@NewPhone", this.Phone);
 
             cmd.ExecuteNonQuery();
-            Id = (int)cmd.LastInsertedId;
+            Id = (int) cmd.LastInsertedId;
             conn.Close();
             if (conn != null)
             {
@@ -45,31 +34,30 @@ namespace HairSalon.Models
             }
         }
 
-        public static List<Client> GetAll()
+        public static List<Specialty> GetAll()
         {
-            List<Client> allClients = new List<Client> { };
+            List<Specialty> allSpecialties = new List<Specialty> { };
             MySqlConnection conn = DB.Connection();
             conn.Open();
 
-            var cmd = conn.CreateCommand()as MySqlCommand;
-            cmd.CommandText = @"SELECT * FROM `clients`;";
-            MySqlDataReader rdr = cmd.ExecuteReader()as MySqlDataReader;
+            var cmd = conn.CreateCommand() as MySqlCommand;
+            cmd.CommandText = @"SELECT * FROM `specialties`;";
+            MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
 
             while (rdr.Read())
             {
                 int Id = rdr.GetInt32(0);
                 string Name = rdr.GetString(1);
-                string Phone = rdr.GetString(3);
-              
-                Client newClient = new Client(Name,Phone);
-                allClients.Add(newClient);
+
+                Specialty newSpecialty= new Specialty(Name, Id);
+                allSpecialties.Add(newSpecialty);
             }
             conn.Close();
             if (conn != null)
             {
                 conn.Dispose();
             }
-            return allClients;
+            return allSpecialties;
         }
 
         public static void ClearAll()
@@ -77,8 +65,8 @@ namespace HairSalon.Models
             MySqlConnection conn = DB.Connection();
             conn.Open();
 
-            var cmd = conn.CreateCommand()as MySqlCommand;
-            cmd.CommandText = @"DELETE FROM `clients`;";
+            var cmd = conn.CreateCommand() as MySqlCommand;
+            cmd.CommandText = @"DELETE FROM `specialties`;";
 
             cmd.ExecuteNonQuery();
 
@@ -94,12 +82,11 @@ namespace HairSalon.Models
             MySqlConnection conn = DB.Connection();
             conn.Open();
 
-            var cmd = conn.CreateCommand()as MySqlCommand;
-            cmd.CommandText = @"UPDATE `clients` SET name = @NewName WHERE id = @thisId;";
+            var cmd = conn.CreateCommand() as MySqlCommand;
+            cmd.CommandText = @"UPDATE `specialties` SET name = @NewName WHERE id = @thisId;";
 
-           
             cmd.Parameters.AddWithValue("@NewName", newName);
-        
+
             cmd.Parameters.AddWithValue("@thisId", this.Id);
             this.Name = newName;
             cmd.ExecuteNonQuery();
@@ -111,28 +98,46 @@ namespace HairSalon.Models
             }
         }
 
-        public static Client Find(int searchId)
+        public static Specialty Find(int id)
         {
             MySqlConnection conn = DB.Connection();
             conn.Open();
-            MySqlCommand cmd = conn.CreateCommand();
-            cmd.CommandText = @"SELECT*FROM clients WHERE id = @searchId;";
-            cmd.Parameters.AddWithValue("@searchId", searchId);
 
-            MySqlDataReader rdr = cmd.ExecuteReader();
+            var cmd = conn.CreateCommand() as MySqlCommand;
+            cmd.CommandText = @"SELECT name FROM `specialties` WHERE id = @NewId;";
+
+            cmd.Parameters.AddWithValue("@NewId", id);
+            MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
 
             rdr.Read();
-            int Id = rdr.GetInt32(0);
-            string Name = rdr.GetString(1);
-            string Phone = rdr.GetString(2);
-            Client foundClient = new Client(Name, Phone, Id);
+
+            string newName = rdr.GetString(0);
+
+            Specialty foundSpecialty = new Specialty(newName, id);
 
             conn.Close();
             if (conn != null)
             {
                 conn.Dispose();
             }
-            return foundClient;
+            return foundSpecialty;
+        }
+        public static void Delete(int specialtyId)
+        {
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+
+            var cmd = conn.CreateCommand() as MySqlCommand;
+            cmd.CommandText = @"DELETE FROM stylists_specialties WHERE specialty_id = @thisId;
+            DELETE FROM specialties WHERE id = @thisId;";
+            cmd.Parameters.AddWithValue("@thisId", specialtyId);
+            cmd.ExecuteNonQuery();
+
+            conn.Close();
+            if (conn != null)
+            {
+                conn.Dispose();
+            }
         }
         public void AddStylist(Stylist newStylist)
         {
@@ -140,9 +145,9 @@ namespace HairSalon.Models
             conn.Open();
 
             MySqlCommand cmd = conn.CreateCommand();
-            cmd.CommandText = @"INSERT INTO stylists_clients (`stylist_id`, `client_id`) VALUES (@StylistId, @ClientId);";
+            cmd.CommandText = @"INSERT INTO stylists_specialties (`stylist_id`, `specialty_id`) VALUES (@StylistId, @SpecialtyId);";
             cmd.Parameters.AddWithValue("@StylistId", newStylist.Id);
-            cmd.Parameters.AddWithValue("@RecipeId", this.Id);
+            cmd.Parameters.AddWithValue("@SpecialtyId", this.Id);
             cmd.ExecuteNonQuery();
             conn.Close();
             if (conn != null)
@@ -156,10 +161,10 @@ namespace HairSalon.Models
             MySqlConnection conn = DB.Connection();
             conn.Open();
             MySqlCommand cmd = conn.CreateCommand();
-            cmd.CommandText = @"SELECT stylists.* FROM clients
-            JOIN stylists_clients ON (clients.id = stylists_clients.client_id)
-            JOIN stylists ON (stylists_clients.stylist_id = stylists.id)
-            WHERE clients.id = @thisId;";
+            cmd.CommandText = @"SELECT stylists.* FROM specialties
+            JOIN stylists_specialties ON (specialties.id = stylists_clients.specialty_id)
+            JOIN stylists ON (stylists_specialties.stylist_id = stylists.id)
+            WHERE specialties.id = @thisId;";
             cmd.Parameters.AddWithValue("@thisId",this.Id);
             MySqlDataReader rdr = cmd.ExecuteReader();
 
@@ -176,23 +181,6 @@ namespace HairSalon.Models
                 conn.Dispose();
             }
         return allStylists;
-        }
-        public static void Delete(int clientId)
-        {
-            MySqlConnection conn = DB.Connection();
-            conn.Open();
-
-            var cmd = conn.CreateCommand() as MySqlCommand;
-            cmd.CommandText = @"DELETE FROM stylists_clients WHERE client_id = @thisId;
-            DELETE FROM clients WHERE id = @thisId;";
-            cmd.Parameters.AddWithValue("@thisId", clientId);
-            cmd.ExecuteNonQuery();
-
-            conn.Close();
-            if (conn != null)
-            {
-                conn.Dispose();
-            }
         }
     }
 }

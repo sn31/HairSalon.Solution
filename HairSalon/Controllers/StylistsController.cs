@@ -39,7 +39,7 @@ namespace HairSalon.Controllers
         {
             Dictionary<string, object> model = new Dictionary<string, object> { };
             Stylist selectedStylist = Stylist.Find(id);
-            List<Client> allClients = Client.Find(id);
+            List<Client> allClients = Client.GetClients(id);
             model.Add("stylist", selectedStylist);
             model.Add("client", allClients);
             Console.WriteLine(allClients.Count);
