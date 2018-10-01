@@ -61,7 +61,10 @@ This is an app for a hair salon. The owner should be able to add a list of the s
 
 ## Known Bugs
 
-None known in this version.
+* When adding a new stylist from the Specialties page, receives the error below:
+```
+Column 'name' cannot be null
+```
 
 ## Support and contact details
 
